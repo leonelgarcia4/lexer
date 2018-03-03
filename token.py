@@ -11,6 +11,9 @@ class token(object):
 listaReservados=[]
 listaReservados=open("reservadas.lex","r")
 lis=[]
-for x in listaReservados:
-	lis.append(x)
-print(lis)
+
+for linea in listaReservados.readlines():
+	temp=len(linea)
+	lis.append(linea[:temp -1])
+if lis[3]=="var":
+	print(lis)

@@ -1,4 +1,3 @@
-
 mientras
 si
 para
