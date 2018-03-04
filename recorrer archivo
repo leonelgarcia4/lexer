@@ -1,0 +1,5 @@
+for linea in self.lisline:
+					print("linea",self.cont)
+					for token in linea:
+							print(token)	
+					self.cont+=1
