@@ -1,9 +1,13 @@
+import re
+
+
 class lexer(object):
 
 	lisline=[]
 	listokens=[]
 	cont=0
 	propias=[]
+	variable=re.compile("[a-z]\w*")
 
 	def iniciar(self):	
 		listalineas=open("entrada.lex","r")
@@ -33,6 +37,12 @@ class lexer(object):
 						
 					self.cont+=1
 			self.cont=0		
+
+	def confirmarVariable(self,averificar):
+		if self.variable.match(averificar)==None:
+			print("variable no valida")
+		else:
+			print("variable valida")			
 
 	def imprimirLineas(self):
 		print(self.lisline)
