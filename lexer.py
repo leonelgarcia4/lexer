@@ -8,6 +8,7 @@ class lexer(object):
 	cont=0
 	propias=[]
 	variable=re.compile("[a-z]\w*")
+	funcion=re.compile("[$][a-z]\w*[(][)]")
 
 	def iniciar(self):	
 		listalineas=open("entrada.lex","r")
@@ -25,6 +26,14 @@ class lexer(object):
 			self.cont+=1	
 		self.cont=0
 
+
+
+	def confirmarfuncion(self,averificar):
+		if self.funcion.match(averificar)==None:
+			False
+		else:
+			True	
+
 	"""docstring for lexer"""
 	def __init__(self):
 		super(lexer, self).__init__()
@@ -40,9 +49,9 @@ class lexer(object):
 
 	def confirmarVariable(self,averificar):
 		if self.variable.match(averificar)==None:
-			print("variable no valida")
+			return False
 		else:
-			print("variable valida")			
+			return True			
 
 	def imprimirLineas(self):
 		print(self.lisline)
@@ -68,4 +77,6 @@ programa.listarTokens()
 programa.imprimirArchivo()
 programa.subirReservadas()
 programa.imprimirPropias()
+
+
 
