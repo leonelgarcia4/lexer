@@ -9,14 +9,38 @@ class lexer(object):
 	propias=[]
 	variable=re.compile("[a-z]\w*")
 	funcion=re.compile("[$][a-z]\w*[(][)]")
+	oplogicos=[]
+	oparitmeticos=[]
+	oprelacionales=[]
 
 	def iniciar(self):	
 		listalineas=open("entrada.lex","r")
+		listalogicos=open("operadoreslogicos.lex","r")
+		listaaritmeticos=open("operadoresaritmeticos.lex","r")
+		listarelacionales=open("operadoresrelacionales.lex","r")
 
 		for linea in listalineas.readlines():
 			temp=len(linea)		
 			self.lisline.append(linea[:temp -1])
 		listalineas.close()	
+
+		for linea in listalogicos.readlines():
+			temp=len(linea)		
+			self.oplogicos.append(linea[:temp -1])
+		listalogicos.close()	
+		print(self.oplogicos)
+
+		for linea in listaaritmeticos.readlines():
+			temp=len(linea)		
+			self.oparitmeticos.append(linea[:temp -1])
+		listaaritmeticos.close()	
+		print(self.oparitmeticos)
+
+		for linea in listarelacionales.readlines():
+			temp=len(linea)		
+			self.oprelacionales.append(linea[:temp -1])
+		listarelacionales.close()	
+		print(self.oprelacionales)
 
 	def listarTokens(self):
 		
