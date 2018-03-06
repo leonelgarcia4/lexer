@@ -27,7 +27,7 @@ class lexer(object):
 			temp=len(linea)	
 			aux=linea.split(" ")
 			if aux[0]=="/*":
-				print(aux[0])
+				
 				self.sw=1
 			
 			if (aux[0]!="//") and (self.sw==0):
@@ -46,19 +46,19 @@ class lexer(object):
 			temp=len(linea)		
 			self.oplogicos.append(linea[:temp -1])
 		listalogicos.close()	
-		print(self.oplogicos)
+		
 
 		for linea in listaaritmeticos.readlines():
 			temp=len(linea)		
 			self.oparitmeticos.append(linea[:temp -1])
 		listaaritmeticos.close()	
-		print(self.oparitmeticos)
+		
 
 		for linea in listarelacionales.readlines():
 			temp=len(linea)		
 			self.oprelacionales.append(linea[:temp -1])
 		listarelacionales.close()	
-		print(self.oprelacionales)
+		
 
 	def listarTokens(self):
 		
@@ -112,7 +112,7 @@ class lexer(object):
 		c=0
 		aux=[]
 		for linea in self.lisline:
-			print(self.cont)
+			
 			for token in linea:
 				aux=self.lisline[self.cont].split(" ")
 				t=aux.count("")
@@ -128,9 +128,12 @@ class lexer(object):
 		
 	def imprimirArchivo(self):
 			self.cont+=1
+			self.listokens=[]
 			for linea in self.lisline:
 					print(self.cont)
 					print(linea)
+					for token in linea:
+						self.listokens.append(token)
 						
 					self.cont+=1
 			self.cont=0		
@@ -160,9 +163,15 @@ class lexer(object):
 
 	def verificartoken(self,tok):
 			if self.tipoLexema(tok):
-					return ("token valido")	
+					True	
 			else:
-				return ("token no valido")					
+				False	
+	def posicionToken(self,token):
+		self.cont=0
+		for linea in self.lisline:
+			if token in linea[self.cont]:
+				return (self.cont+1)
+			self.cont+=1					
 
 
 programa=lexer()
@@ -172,9 +181,24 @@ programa.borrarenblanco()
 programa.listarTokens()
 programa.imprimirArchivo()
 programa.subirReservadas()
-programa.imprimirPropias()
-ar="8455"
-print(programa.tipoLexema(ar))
-print(programa.verificartoken(ar))
+print("----------------------------------------------------------------")
+print("\t \t \t LISTA DE LOS TOKEN")
+print("----------------------------------------------------------------")
+for token in programa.listokens:
+	if token!="":
+		print("lexema: ", token, "tipo: ", programa.tipoLexema(token))
+
+print("----------------------------------------------------------------")
+print("\t \t \t LISTA DE LOS ERRORES")
+print("----------------------------------------------------------------")
+"""
+for token in programa.lisline:
+	if programa.verificartoken(token)!=True:
+		print(token, "token invalido")
+	"""
+		
+
+
+
 
 

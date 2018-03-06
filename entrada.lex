@@ -1,3 +1,4 @@
 /* leonel jose garcia martinez
 */ 
-jose rafael garcia polo
+mientras $num1 > $num2
+imprimir $num1  
