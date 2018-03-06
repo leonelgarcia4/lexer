@@ -9,10 +9,13 @@ class lexer(object):
 	propias=[]
 	variable=re.compile("[$][a-z]\w*$")
 	funcion=re.compile("[$][a-z]\w*[(][)]$")
+	numeros=re.compile("\d+")
 	oplogicos=[]
 	oparitmeticos=[]
 	oprelacionales=[]
 	tokenvalido=None
+	sw=0
+
 
 	def iniciar(self):	
 		listalineas=open("entrada.lex","r")
@@ -21,9 +24,23 @@ class lexer(object):
 		listarelacionales=open("operadoresrelacionales.lex","r")
 
 		for linea in listalineas.readlines():
-			temp=len(linea)		
-			self.lisline.append(linea[:temp -1])
+			temp=len(linea)	
+			aux=linea.split(" ")
+			if aux[0]=="/*":
+				print(aux[0])
+				self.sw=1
+			
+			if (aux[0]!="//") and (self.sw==0):
+				self.lisline.append(linea[:temp -1])
+
+			if aux[0]=="*/":
+					self.sw=0		
+
+				
+			self.cont+=1
+		self.cont=0	
 		listalineas.close()	
+		
 
 		for linea in listalogicos.readlines():
 			temp=len(linea)		
@@ -61,6 +78,15 @@ class lexer(object):
 		if token in self.oprelacionales:
 			return "operador relacional"
 
+		if token in self.propias:
+			return "reservada"	
+
+		if self.numeros.match(token):
+				aux=len(self.numeros.search(token).group())
+				if aux==len(token):
+					return "numerico"
+				
+
 		if self.confirmarfuncion(token):
 			return self.tokenvalido	
 			
@@ -68,7 +94,6 @@ class lexer(object):
 		if self.confirmarVariable(token)==True:
 			return "identificador"
 
-		
 
 	def confirmarfuncion(self,aver):
 		if self.funcion.match(aver):
@@ -82,6 +107,24 @@ class lexer(object):
 	"""docstring for lexer"""
 	def __init__(self):
 		super(lexer, self).__init__()
+
+	def borrarenblanco(self):
+		c=0
+		aux=[]
+		for linea in self.lisline:
+			print(self.cont)
+			for token in linea:
+				aux=self.lisline[self.cont].split(" ")
+				t=aux.count("")
+				for x in range(0,t):
+					aux.remove("")
+				
+				
+				
+				
+				c+=1
+			self.cont+=1
+		self.cont=0	
 		
 	def imprimirArchivo(self):
 			self.cont+=1
@@ -115,14 +158,23 @@ class lexer(object):
 	def imprimirPropias(self):
 			print(self.propias)	
 
+	def verificartoken(self,tok):
+			if self.tipoLexema(tok):
+					return ("token valido")	
+			else:
+				return ("token no valido")					
+
 
 programa=lexer()
+
 programa.iniciar()
+programa.borrarenblanco()
 programa.listarTokens()
 programa.imprimirArchivo()
 programa.subirReservadas()
 programa.imprimirPropias()
-ar=""
+ar="8455"
 print(programa.tipoLexema(ar))
+print(programa.verificartoken(ar))
 
 

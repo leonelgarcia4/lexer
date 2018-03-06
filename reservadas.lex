@@ -4,6 +4,7 @@ para
 var
 verdadero
 falso
+imprimir
 =
 
 
@@ -12,8 +13,7 @@ falso
 }
 [
 ]
-(
-)
+
 :
 ;
 
