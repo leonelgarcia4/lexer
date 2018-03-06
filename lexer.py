@@ -5,6 +5,7 @@ class lexer(object):
 
 	lisline=[]
 	listokens=[]
+	liserrores=[]
 	cont=0
 	propias=[]
 	variable=re.compile("[$][a-z]\w*$")
@@ -181,22 +182,29 @@ programa.borrarenblanco()
 programa.listarTokens()
 programa.imprimirArchivo()
 programa.subirReservadas()
-print("----------------------------------------------------------------")
+print("---------------------------------------------------------------")
 print("\t \t \t LISTA DE LOS TOKEN")
 print("----------------------------------------------------------------")
 for token in programa.listokens:
 	if token!="":
-		print("lexema: ", token, "tipo: ", programa.tipoLexema(token))
+		print("lexema: " + token, "tipo: " , programa.tipoLexema(token))
+	if programa.tipoLexema(token)==None:
+		programa.liserrores.append(token)
 
 print("----------------------------------------------------------------")
 print("\t \t \t LISTA DE LOS ERRORES")
 print("----------------------------------------------------------------")
-"""
-for token in programa.lisline:
-	if programa.verificartoken(token)!=True:
-		print(token, "token invalido")
-	"""
-		
+cont=0
+
+for error in programa.liserrores:
+	print("LexError: " + error)
+	for linea in programa.lisline:
+		if error in linea:
+			print("en la linea: ", cont+1)
+		cont+=1
+	cont=0
+
+
 
 
 

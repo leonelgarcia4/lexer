@@ -1,4 +1,5 @@
 /* leonel jose garcia martinez
 */ 
 mientras $num1 > $num2
-imprimir $num1  
+imprimir $num1  1jh
+wddwd
