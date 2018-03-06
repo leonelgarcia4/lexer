@@ -7,11 +7,12 @@ class lexer(object):
 	listokens=[]
 	cont=0
 	propias=[]
-	variable=re.compile("[a-z]\w*")
-	funcion=re.compile("[$][a-z]\w*[(][)]")
+	variable=re.compile("[$][a-z]\w*$")
+	funcion=re.compile("[$][a-z]\w*[(][)]$")
 	oplogicos=[]
 	oparitmeticos=[]
 	oprelacionales=[]
+	tokenvalido=None
 
 	def iniciar(self):	
 		listalineas=open("entrada.lex","r")
@@ -50,13 +51,33 @@ class lexer(object):
 			self.cont+=1	
 		self.cont=0
 
+	def tipoLexema(self,token):
+		if token in self.oplogicos:
+			return "operador logico"
 
+		if token in self.oparitmeticos:
+			return "operador aritmetico"
 
-	def confirmarfuncion(self,averificar):
-		if self.funcion.match(averificar)==None:
-			False
+		if token in self.oprelacionales:
+			return "operador relacional"
+
+		if self.confirmarfuncion(token):
+			return self.tokenvalido	
+			
+
+		if self.confirmarVariable(token)==True:
+			return "identificador"
+
+		
+
+	def confirmarfuncion(self,aver):
+		if self.funcion.match(aver):
+			self.tokenvalido="funcion"
+			return self.tokenvalido
 		else:
-			True	
+			return self.tokenvalido	
+		
+			
 
 	"""docstring for lexer"""
 	def __init__(self):
@@ -101,6 +122,7 @@ programa.listarTokens()
 programa.imprimirArchivo()
 programa.subirReservadas()
 programa.imprimirPropias()
-
+ar=""
+print(programa.tipoLexema(ar))
 
 
